@@ -26,5 +26,6 @@ class Program
         truck.StartTime = new DateTime(2023, 7, 28, 16, 0, 0); // 4pm on Friday
         truck.EndTime = new DateTime(2023, 7, 31, 8, 0, 0); // 8am on Monday
         Console.WriteLine($"Scenario 4 rental price: ${truck.CalculatePrice()}");
+        Console.ReadLine();
     }
 }

@@ -8,24 +8,24 @@ namespace TruckRentalChallenge
 {
     public class Truck
     {
-        public double WeekdayRate { get; set; }
-        public double WeekendRate { get; set; }
-        public double FirstTwentyMinutes { get; set; }
+        public decimal WeekdayRate { get; set; }
+        public decimal WeekendRate { get; set; }
+        public decimal FirstTwentyMinutes { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
 
-        public Truck(double weekdayRate, double weekendRate, double firstTwentyMinutes)
+        public Truck(decimal weekdayRate, decimal weekendRate, decimal firstTwentyMinutes)
         {
             this.WeekdayRate = weekdayRate;
             this.WeekendRate = weekendRate;
             this.FirstTwentyMinutes = firstTwentyMinutes;
         }
-        public double CalculatePrice()
+        public decimal CalculatePrice()
         {
             int totalDays = CalculateDays();
 
-            double price = 0;
+            decimal price = 0;
             for (int i = 0; i < totalDays; i++)
             {
                 DateTime day = StartTime.AddDays(i);
