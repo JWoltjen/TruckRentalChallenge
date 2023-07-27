@@ -24,7 +24,36 @@ namespace TruckRentalChallenge
         }
         public double CalculatePrice()
         {
-            return 15; 
+            int totalDays = CalculateDays();
+
+            double price = 0;
+            for (int i = 0; i < totalDays; i++)
+            {
+                DateTime day = StartTime.AddDays(i);
+                if (day.DayOfWeek == DayOfWeek.Saturday || day.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    price += WeekendRate;
+                }
+                else
+                {
+                    price += WeekdayRate;
+                }
+            }
+
+            return price;
+        }
+
+        public int CalculateDays()
+        {
+            // Calculate total duration of rental days
+            int totalDays = (EndTime - StartTime).Days;
+
+            // Round up to the next day if more than 20 minutes
+            if((EndTime - StartTime).TotalMinutes > 20)
+            {
+                totalDays = totalDays + 1;
+            }
+            return totalDays;
         }
     }
 }
