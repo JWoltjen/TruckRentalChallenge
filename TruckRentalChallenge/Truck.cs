@@ -11,7 +11,6 @@ namespace TruckRentalChallenge
         public double WeekdayRate { get; set; }
         public double WeekendRate { get; set; }
         public double FirstTwentyMinutes { get; set; }
-
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
@@ -48,8 +47,8 @@ namespace TruckRentalChallenge
             // Calculate total duration of rental days
             int totalDays = (EndTime - StartTime).Days;
 
-            // Round up to the next day if more than 20 minutes
-            if((EndTime - StartTime).TotalMinutes > 20)
+            // Round up to the next day if rental period extends pass the end of working hours
+            if(EndTime.TimeOfDay > new TimeSpan(17, 0, 0)) // 5 PM
             {
                 totalDays = totalDays + 1;
             }
