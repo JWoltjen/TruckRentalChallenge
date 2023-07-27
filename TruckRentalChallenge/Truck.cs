@@ -8,6 +8,7 @@ namespace TruckRentalChallenge
 {
     public class Truck
     {
+        public decimal HourlyRate { get; set; }
         public decimal WeekdayRate { get; set; }
         public decimal WeekendRate { get; set; }
         public decimal FirstTwentyMinutes { get; set; }
@@ -15,8 +16,9 @@ namespace TruckRentalChallenge
         public DateTime EndTime { get; set; }
 
 
-        public Truck(decimal weekdayRate, decimal weekendRate, decimal firstTwentyMinutes)
+        public Truck(decimal hourlyRate, decimal weekdayRate, decimal weekendRate, decimal firstTwentyMinutes)
         {
+            this.HourlyRate = hourlyRate;
             this.WeekdayRate = weekdayRate;
             this.WeekendRate = weekendRate;
             this.FirstTwentyMinutes = firstTwentyMinutes;
@@ -53,6 +55,18 @@ namespace TruckRentalChallenge
                 totalDays = totalDays + 1;
             }
             return totalDays;
+        }
+        public int CalculateHours()
+        {
+            // Calculate total duration of rental in hours
+            int totalHours = (int)(EndTime - StartTime).TotalHours;
+
+            // Round up to the next hour if rental period extends pass 20 minutes
+            if ((EndTime - StartTime).TotalMinutes % 60 > 20)
+            {
+                totalHours = totalHours + 1;
+            }
+            return totalHours;
         }
     }
 }
