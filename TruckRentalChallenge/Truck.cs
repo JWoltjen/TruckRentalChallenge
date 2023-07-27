@@ -31,7 +31,16 @@ namespace TruckRentalChallenge
             if (totalHours < 24 && StartTime.DayOfWeek != DayOfWeek.Saturday && StartTime.DayOfWeek != DayOfWeek.Sunday)
             {
                 // If the rental period is less than a day and it's a weekday, calculate the price based on the hourly rate
-                price = HourlyRate * totalHours;
+                if (totalHours == 1)
+                {
+                    // If the rental period is less than or equal to an hour, apply the discounted price for the first twenty minutes
+                    price = FirstTwentyMinutes;
+                }
+                else
+                {
+                    // If the rental period is more than an hour, apply the discounted price for the first twenty minutes and the hourly rate for the remaining time
+                    price = FirstTwentyMinutes + HourlyRate * (totalHours - 1);
+                }
             }
             else
             {
