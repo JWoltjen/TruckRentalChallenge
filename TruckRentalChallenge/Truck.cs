@@ -25,19 +25,29 @@ namespace TruckRentalChallenge
         }
         public decimal CalculatePrice()
         {
-            int totalDays = CalculateDays();
+            int totalHours = CalculateHours();
 
             decimal price = 0;
-            for (int i = 0; i < totalDays; i++)
+            if (totalHours < 24 && StartTime.DayOfWeek != DayOfWeek.Saturday && StartTime.DayOfWeek != DayOfWeek.Sunday)
             {
-                DateTime day = StartTime.AddDays(i);
-                if (day.DayOfWeek == DayOfWeek.Saturday || day.DayOfWeek == DayOfWeek.Sunday)
+                // If the rental period is less than a day and it's a weekday, calculate the price based on the hourly rate
+                price = HourlyRate * totalHours;
+            }
+            else
+            {
+                // If the rental period is a day or more, or it's a weekend, calculate the price based on the daily rate
+                int totalDays = CalculateDays();
+                for (int i = 0; i < totalDays; i++)
                 {
-                    price += WeekendRate;
-                }
-                else
-                {
-                    price += WeekdayRate;
+                    DateTime day = StartTime.AddDays(i);
+                    if (day.DayOfWeek == DayOfWeek.Saturday || day.DayOfWeek == DayOfWeek.Sunday)
+                    {
+                        price += WeekendRate;
+                    }
+                    else
+                    {
+                        price += WeekdayRate;
+                    }
                 }
             }
 
